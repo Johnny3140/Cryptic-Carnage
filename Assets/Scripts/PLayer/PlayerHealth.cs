@@ -21,6 +21,8 @@ public class PlayerHealth : MonoBehaviour
     {
         health = maxHealth;
         StartCoroutineIfNotRunning(HealthRegeneration());
+                Debug.Log("Player health initialized to: " + health);
+
     }
 
     private void Update()

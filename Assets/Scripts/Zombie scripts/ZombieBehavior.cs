@@ -4,7 +4,7 @@ using UnityEngine.AI;
 
 public class ZombieBehavior : MonoBehaviour
 {
-    public float detectionRadius = 10f;
+    public float detectionRadius = 100f;
     public float attackRange = 2f;
     public float attackDamage = 10f;
     public float attackCooldown = 2f;
@@ -15,6 +15,7 @@ public class ZombieBehavior : MonoBehaviour
     private bool isAttacking;
     private Animator animator;
     private float originalSpeed; // Store the original speed
+    private float currentHealth;
 
     void Start()
     {
@@ -30,6 +31,9 @@ public class ZombieBehavior : MonoBehaviour
 
         // Store the original speed
         originalSpeed = navMeshAgent.speed;
+        
+        //set initial health
+        currentHealth = 100f;
 
         // Start the zombie's behavior
         StartCoroutine(StartZombieBehavior());
@@ -49,6 +53,9 @@ public class ZombieBehavior : MonoBehaviour
                 // Move towards the player
                 navMeshAgent.SetDestination(player.position);
 
+                //trigger walk animation 
+                animator.SetBool("isWalking", true);
+
                 if (distanceToPlayer < attackRange && !isAttacking)
                 {
                     // Attack the player
@@ -60,6 +67,10 @@ public class ZombieBehavior : MonoBehaviour
                     // Reset speed after attacking
                     navMeshAgent.speed = originalSpeed;
                 }
+            }
+            else 
+            {
+                animator.SetBool("isWalking", false);
             }
 
             yield return null;
@@ -77,7 +88,13 @@ public class ZombieBehavior : MonoBehaviour
             if (playerHealth != null)
             {
                 playerHealth.TakeDamage(attackDamage);
+                            Debug.Log("Dealt damage: " + attackDamage);
+
             }
         }
+    }
+    public void TakeDamage(float damage)
+    {
+    DealDamage();
     }
 }
