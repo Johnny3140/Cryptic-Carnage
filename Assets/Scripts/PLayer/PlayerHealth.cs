@@ -11,49 +11,55 @@ public class PlayerHealth : MonoBehaviour
     private bool recentlyDamaged = false;
 
     public float maxHealth = 100;
-    public float chipSpeed = 2f;
+    public float chipSpeed = 10f;
     public float healthRegenRate = 5f;
     public float healthRegenAmount = 1f;
     public Image frontHealthBar;
     public Image backHealthBar;
-
     private void Start()
     {
         health = maxHealth;
         StartCoroutineIfNotRunning(HealthRegeneration());
                 Debug.Log("Player health initialized to: " + health);
 
+                UpdateHealthUI();
+
     }
 
     private void Update()
-    {
+    {   Debug.Log("Update method called.");
+
         health = Mathf.Clamp(health, 0, maxHealth);
-        UpdateHealthUI();
         recentlyDamaged = false; // Reset recentlyDamaged flag each frame
+            Debug.Log("Current health: " + health);
+        UpdateHealthUI();
+
     }
 
     private void UpdateHealthUI()
+{
+    float hFraction = health / maxHealth;
+    percentComplete += Time.deltaTime / chipSpeed;
+
+    // Interpolate fill amount
+    frontHealthBar.fillAmount = Mathf.Lerp(frontHealthBar.fillAmount, hFraction, percentComplete);
+
+    // Calculate lerping progress
+    float progress = Mathf.Clamp01(percentComplete / 1.0f);
+
+    // Interpolate color between red and white based on progress
+    backHealthBar.color = Color.Lerp(Color.red, Color.white, progress);
+
+    if (frontHealthBar.fillAmount >= hFraction)
     {
-        float hFraction = health / maxHealth;
-        percentComplete = 0f; 
-
-        if (frontHealthBar.fillAmount < hFraction)
-        {
-            lerpTimer += Time.deltaTime;
-            percentComplete = lerpTimer / chipSpeed;
-            percentComplete = percentComplete * percentComplete;
-            frontHealthBar.fillAmount = Mathf.Lerp(frontHealthBar.fillAmount, hFraction, percentComplete);
-        }
-        else
-        {
-            lerpTimer = 0f;
-        }
-
-        if (percentComplete >= 1.0f)
-        {
-            backHealthBar.color = Color.white;
-        }
+        // Lerping complete
+        lerpTimer = 0f;
+        backHealthBar.color = Color.white;  // Set color to white when lerping is complete
     }
+}
+
+
+
 
     public void TakeDamage(float damage)
     {
