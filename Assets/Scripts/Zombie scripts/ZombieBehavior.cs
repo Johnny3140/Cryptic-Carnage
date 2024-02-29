@@ -16,6 +16,7 @@ public class ZombieBehavior : MonoBehaviour
     private Animator animator;
     private float originalSpeed; // Store the original speed
     private float currentHealth;
+    private  ZombieHealth zombieHealth;
 
     void Start()
     {
@@ -32,9 +33,7 @@ public class ZombieBehavior : MonoBehaviour
         // Store the original speed
         originalSpeed = navMeshAgent.speed;
         
-        //set initial health
-        currentHealth = 100f;
-
+        zombieHealth = GetComponent<ZombieHealth>(); 
         // Start the zombie's behavior
         StartCoroutine(StartZombieBehavior());
     }
@@ -54,7 +53,7 @@ public class ZombieBehavior : MonoBehaviour
                 navMeshAgent.SetDestination(player.position);
 
                 //trigger walk animation 
-                animator.SetBool("isWalking", true);
+                animator.SetBool("Walk", true);
 
                 if (distanceToPlayer < attackRange && !isAttacking)
                 {
@@ -70,7 +69,7 @@ public class ZombieBehavior : MonoBehaviour
             }
             else 
             {
-                animator.SetBool("isWalking", false);
+                animator.SetBool("Walk", false);
             }
 
             yield return null;

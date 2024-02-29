@@ -553,9 +553,11 @@ GameObject:
   - component: {fileID: 1915244865757737085}
   - component: {fileID: 5674428833880803134}
   - component: {fileID: 8833566883130591216}
+  - component: {fileID: 6457889402285453837}
+  - component: {fileID: -1964915672144220263}
   m_Layer: 0
-  m_Name: FreeZombieSimpleMovement (1)
-  m_TagString: Untagged
+  m_Name: ZombiePrefab
+  m_TagString: 'Zombie '
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -586,7 +588,7 @@ Animator:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5533562007352224933}
   m_Enabled: 1
-  m_Avatar: {fileID: 9000000, guid: 520328afa68e691429451635bbb84c79, type: 3}
+  m_Avatar: {fileID: 9000000, guid: 8c53cffd52097cf4582f0a090c9a833e, type: 3}
   m_Controller: {fileID: 9100000, guid: c929656c07909194ab8a5cd79f5f371d, type: 2}
   m_CullingMode: 1
   m_UpdateMode: 0
@@ -648,6 +650,36 @@ CapsuleCollider:
   m_Height: 1
   m_Direction: 1
   m_Center: {x: 0, y: 0.5, z: 0}
+--- !u!114 &6457889402285453837
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5533562007352224933}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f798f55d3da0e45c4949b69ef5f01a53, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  detectionRadius: 100
+  attackRange: 2
+  attackDamage: 10
+  attackCooldown: 2
+  chaseSpeed: 3.5
+--- !u!114 &-1964915672144220263
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5533562007352224933}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d577cb980becc4acfbe375ba9ddac343, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Health: 100
 --- !u!1 &5929055368167910029
 GameObject:
   m_ObjectHideFlags: 0

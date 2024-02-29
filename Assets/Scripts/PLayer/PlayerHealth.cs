@@ -20,18 +20,17 @@ public class PlayerHealth : MonoBehaviour
     {
         health = maxHealth;
         StartCoroutineIfNotRunning(HealthRegeneration());
-                Debug.Log("Player health initialized to: " + health);
+                
 
                 UpdateHealthUI();
 
     }
 
     private void Update()
-    {   Debug.Log("Update method called.");
+    {   
 
         health = Mathf.Clamp(health, 0, maxHealth);
         recentlyDamaged = false; // Reset recentlyDamaged flag each frame
-            Debug.Log("Current health: " + health);
         UpdateHealthUI();
 
     }

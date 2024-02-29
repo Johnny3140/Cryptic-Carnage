@@ -4,15 +4,26 @@ using UnityEngine;
 
 public class Bullet : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
+    public float speed = 10f; // Bullet speed
+    public int damage = 10; // Bullet damage
+    public void SetDamage(int newDamage)
     {
-        
+        damage = newDamage;
     }
 
-    // Update is called once per frame
     void Update()
     {
-        
+        transform.Translate(Vector3.right * speed * Time.deltaTime);
+    }
+
+    void OnTriggerEnter2D(Collider2D other)
+    {
+        ZombieHealth zombieHealth = other.GetComponent<ZombieHealth>();
+        if (zombieHealth != null)
+        {
+            zombieHealth.TakeDamage(damage);
+        }
+
+        Destroy(gameObject);
     }
 }
