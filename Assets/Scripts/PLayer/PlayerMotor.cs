@@ -6,6 +6,7 @@ using UnityEngine.InputSystem;
 
 public class PlayerMotor : MonoBehaviour
 {
+    private GameManager gameManager;
     private CharacterController controller;
     private Vector3 playerVelocity;
     private bool isGrounded;
@@ -20,6 +21,7 @@ public class PlayerMotor : MonoBehaviour
     void Start()
     {
         controller = GetComponent<CharacterController>();
+        gameManager = GameManager.instance;
     }
 
     // Update is called once per frame
@@ -79,5 +81,12 @@ public class PlayerMotor : MonoBehaviour
             speed = 8;
         else
             speed = 5;
+    }
+    public void AddScorePoints(int points)
+    {
+        if (gameManager != null)
+        {
+            gameManager.AddScore(points);
+        }
     }
 }

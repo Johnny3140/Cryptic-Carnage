@@ -8,18 +8,20 @@ public class ZombieBehavior : MonoBehaviour
     public float attackRange = 2f;
     public float attackDamage = 10f;
     public float attackCooldown = 2f;
-    public float chaseSpeed = 3.5f; 
+    public float chaseSpeed = 3.5f;
 
     private Transform player;
     private NavMeshAgent navMeshAgent;
     private bool isAttacking;
     private Animator animator;
     private float originalSpeed; // Store the original speed
-    private float currentHealth;
-    private  ZombieHealth zombieHealth;
+    private ZombieHealth zombieHealth;
+    private ZombieSpawner zombieSpawner;
 
     void Start()
     {
+        zombieSpawner = FindObjectOfType<ZombieSpawner>();
+
         // Add a NavMeshAgent if not present
         navMeshAgent = GetComponent<NavMeshAgent>();
         if (navMeshAgent == null)
@@ -32,8 +34,8 @@ public class ZombieBehavior : MonoBehaviour
 
         // Store the original speed
         originalSpeed = navMeshAgent.speed;
-        
-        zombieHealth = GetComponent<ZombieHealth>(); 
+
+        zombieHealth = GetComponent<ZombieHealth>();
         // Start the zombie's behavior
         StartCoroutine(StartZombieBehavior());
     }
@@ -46,28 +48,31 @@ public class ZombieBehavior : MonoBehaviour
 
             if (distanceToPlayer < detectionRadius)
             {
-                // Set chase speed when player is detected
+                // Set chase speed when the player is detected
                 navMeshAgent.speed = chaseSpeed;
 
                 // Move towards the player
                 navMeshAgent.SetDestination(player.position);
 
-                //trigger walk animation 
+                // Trigger walk animation 
                 animator.SetBool("Walk", true);
 
                 if (distanceToPlayer < attackRange && !isAttacking)
                 {
                     // Attack the player
                     isAttacking = true;
-                    animator.SetTrigger("Attack"); //Called from animation alert in unity 
+                    animator.SetTrigger("Attack"); // Called from animation alert in Unity 
                     yield return new WaitForSeconds(attackCooldown);
                     isAttacking = false;
 
                     // Reset speed after attacking
                     navMeshAgent.speed = originalSpeed;
+
+                    // Notify ZombieHealth script when the zombie takes damage
+                    zombieHealth.TakeDamage(attackDamage);
                 }
             }
-            else 
+            else
             {
                 animator.SetBool("Walk", false);
             }
@@ -76,7 +81,7 @@ public class ZombieBehavior : MonoBehaviour
         }
     }
 
-    // Called by animation event in unity 
+    // Called by animation event in Unity 
     void DealDamage()
     {
         float distanceToPlayer = Vector3.Distance(transform.position, player.position);
@@ -87,13 +92,13 @@ public class ZombieBehavior : MonoBehaviour
             if (playerHealth != null)
             {
                 playerHealth.TakeDamage(attackDamage);
-                            Debug.Log("Dealt damage: " + attackDamage);
-
+                Debug.Log("Dealt damage: " + attackDamage);
             }
         }
     }
+
     public void TakeDamage(float damage)
     {
-    DealDamage();
+        DealDamage();
     }
 }

@@ -1,37 +1,34 @@
-using UnityEngine;
 using System.Collections;
+using UnityEngine;
 
 public class ZombieSpawner : MonoBehaviour
 {
     public GameObject zombiePrefab;
     public Transform spawnPoint;
-    public float timeBetweenSpawns = 2f;
-    public int zombiesPerRoundIncrease = 2;
-
-    private int zombiesToSpawn;
+    public float timeBetweenWaves = 10f;  // Time between each wave/round
+    private int currentRound = 1;
 
     void Start()
     {
-        GameManager.OnRoundStart += OnRoundStart; 
-    }
-
-    void OnRoundStart()
-    {
-        zombiesToSpawn = GameManager.instance.currentRound * zombiesPerRoundIncrease;
         StartCoroutine(SpawnZombies());
     }
 
     IEnumerator SpawnZombies()
     {
-        for (int i = 0; i < zombiesToSpawn; i++)
+        while (true)
         {
-            SpawnZombie();
-            yield return new WaitForSeconds(timeBetweenSpawns);
+            int numberOfZombies = currentRound * 2;  // Adjust this formula as needed
+            SpawnWave(numberOfZombies);
+            yield return new WaitForSeconds(timeBetweenWaves);
+            currentRound++;
         }
     }
 
-    void SpawnZombie()
+    void SpawnWave(int count)
     {
-        Instantiate(zombiePrefab, spawnPoint.position, spawnPoint.rotation);
+        for (int i = 0; i < count; i++)
+        {
+            Instantiate(zombiePrefab, spawnPoint.position, spawnPoint.rotation);
+        }
     }
 }

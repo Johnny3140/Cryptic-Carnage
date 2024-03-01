@@ -1,89 +1,51 @@
 using UnityEngine;
 using UnityEngine.UI;
-using System.Collections;
+using System.Collections; // Add this line
 
 public class GameManager : MonoBehaviour
 {
-    public static GameManager instance;
-
-    public int currentRound = 0;
-    public int score = 0;
-
-    public Text roundText;
+    public static GameManager instance; // Singleton pattern
     public Text scoreText;
-
-    public delegate void RoundStartAction();
-    public static event RoundStartAction OnRoundStart;
-
-    public ZombieSpawner zombieSpawner; 
+    public Text roundText;
+    
+    private int score = 0;
+    private int currentRound = 1;
 
     void Awake()
     {
         if (instance == null)
-        {
             instance = this;
-        }
-        else if (instance != this)
-        {
+        else
             Destroy(gameObject);
-        }
+
         DontDestroyOnLoad(gameObject);
     }
 
     void Start()
     {
-        StartNewRound();
-    }
-
-    void Update()
-{
-    // Check conditions to advance to the next round 
-    if (AllZombiesDead())
-    {
-        StartNewRound();
-    }
-
-    // Update UI elements
-    UpdateUI();
-}
-
-bool AllZombiesDead()
-{
-    // Check if there are no more zombies in the scene
-    return GameObject.FindGameObjectsWithTag("Zombie").Length == 0;
-}
-
-    void StartNewRound()
-    {
-        currentRound++;
-
-        if (OnRoundStart != null)
-        {
-            OnRoundStart();
-        }
-
-        // Update UI
         UpdateUI();
+        StartCoroutine(StartNewRound());
     }
 
-    public void IncreaseScore(int points)
+    IEnumerator StartNewRound()
+    {
+        while (true)
+        {
+            yield return new WaitForSeconds(5f); // Adjust the delay between rounds as needed
+            currentRound++;
+            UpdateUI();
+        }
+    }
+
+    public void AddScore(int points)
     {
         score += points;
-
-        // Update UI
         UpdateUI();
     }
 
     void UpdateUI()
     {
-        if (roundText != null)
-        {
-            roundText.text = "Round: " + currentRound;
-        }
-
-        if (scoreText != null)
-        {
-            scoreText.text = "Score: " + score;
-        }
+        scoreText.text = "Score: " + score;
+        roundText.text = "Round: " + currentRound;
     }
 }
