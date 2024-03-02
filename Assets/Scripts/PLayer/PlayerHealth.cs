@@ -67,6 +67,13 @@ public class PlayerHealth : MonoBehaviour
         StopCoroutineIfRunning(HealthRegeneration());
         StartCoroutineIfNotRunning(HealthRegeneration());
         recentlyDamaged = true; // Set recentlyDamaged to true when taking damage
+        // Check if health is zero or below
+        if (health <= 0)
+        {
+            // Player is dead, notify GameManager
+            GameManager.instance.PlayerDied();
+        }
+    
     }
 
     private void RestoreHealth(float healAmount)

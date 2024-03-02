@@ -31,4 +31,7 @@ public class ZombieSpawner : MonoBehaviour
             Instantiate(zombiePrefab, spawnPoint.position, spawnPoint.rotation);
         }
     }
+    public void ZombieDefeated()
+{
+}
 }

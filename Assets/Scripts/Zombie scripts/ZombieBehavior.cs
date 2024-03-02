@@ -97,8 +97,5 @@ public class ZombieBehavior : MonoBehaviour
         }
     }
 
-    public void TakeDamage(float damage)
-    {
-        DealDamage();
-    }
+    
 }

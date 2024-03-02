@@ -89,4 +89,9 @@ public class PlayerMotor : MonoBehaviour
             gameManager.AddScore(points);
         }
     }
+    public void PlayerDied()
+    {
+        GameManager.instance.PlayerDied();
+    }
+
 }
