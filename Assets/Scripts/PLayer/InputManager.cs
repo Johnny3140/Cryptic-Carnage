@@ -21,9 +21,10 @@ public class InputManager : MonoBehaviour
 
 
         onFoot.Jump.performed += ctx => motor.Jump();
-
         onFoot.Crouch.performed += ctx => motor.Crouch();
         onFoot.Sprint.performed += ctx => motor.Sprint();
+
+        onFoot.Reload.performed += ctx => ReloadPistol();
     }
 
     // Update is called once per frame
@@ -48,4 +49,15 @@ public class InputManager : MonoBehaviour
     {
         onFoot.Disable();
     }
+    private void ReloadPistol()
+    {
+        // Assuming your pistol is attached to the player GameObject
+        Pistol pistol = GetComponentInChildren<Pistol>();
+
+        if (pistol != null)
+        {
+            StartCoroutine(pistol.Reload());
+        }
+    }
 }
+

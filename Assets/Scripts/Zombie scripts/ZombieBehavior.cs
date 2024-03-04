@@ -18,6 +18,9 @@ public class ZombieBehavior : MonoBehaviour
     private ZombieHealth zombieHealth;
     private ZombieSpawner zombieSpawner;
 
+    public AudioSource zombieAudioSource;
+    public AudioClip zombieAttackSound;
+
     void Start()
     {
         zombieSpawner = FindObjectOfType<ZombieSpawner>();
@@ -62,6 +65,10 @@ public class ZombieBehavior : MonoBehaviour
                     // Attack the player
                     isAttacking = true;
                     animator.SetTrigger("Attack"); // Called from animation alert in Unity 
+                    if (zombieAudioSource != null && zombieAttackSound != null)
+                {
+                    zombieAudioSource.PlayOneShot(zombieAttackSound);
+                }
                     yield return new WaitForSeconds(attackCooldown);
                     isAttacking = false;
 
@@ -70,6 +77,8 @@ public class ZombieBehavior : MonoBehaviour
 
                     // Notify ZombieHealth script when the zombie takes damage
                     zombieHealth.TakeDamage(attackDamage);
+                    
+
                 }
             }
             else
