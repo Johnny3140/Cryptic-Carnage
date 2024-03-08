@@ -1,7 +1,7 @@
 # CrypticCarnage 
 
 #### 3D unity FPS zombie horde shooter made as my CapStone project for GA. 
-<img src = "/Users/Johnny/Cryptic-Carnage/Screenshot 2024-03-04 at 7.05.26 PM (2).png" alt = "finaly unity screenshot">
+<img src = "Screenshot 2024-03-04 at 7.05.26 PM (2).png" alt = "finaly unity screenshot">
 
 
 ## Description 
@@ -21,8 +21,8 @@ The longer you survive you'll notice the amount of zombies that spawn get signif
 * User can deal damage to zombies by shooting them 
 
 ## Ingame Photos 
-* <img src ="/Users/Johnny/Cryptic-Carnage/Screenshot 2024-03-04 at 7.11.51 PM.png" alt= "Ingame photo 1 ">
-* <img src ="/Users/Johnny/Cryptic-Carnage/Screenshot 2024-03-04 at 7.12.28 PM.png" alt= "Ingame photo 2">
+* <img src ="Screenshot 2024-03-04 at 7.11.51 PM.png" alt= "Ingame photo 1 ">
+* <img src ="Screenshot 2024-03-04 at 7.12.28 PM.png" alt= "Ingame photo 2">
 ## Github Repo link 
 <a href="https://github.com/Johnny3140/Cryptic-Carnage">Click Here</a>
 
